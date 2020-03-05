@@ -1,4 +1,6 @@
 import java.lang.Math; 
+import java.util.*;
+
 public class Main{
     
     public static int[] getRandomArray(int n){
@@ -21,18 +23,31 @@ public class Main{
     }
 
     public static void main(String args[]){
-        int[] nums = getRandomArray(10000);
+        int[] nums = getSortedArray(10);
         iBST BSTIter = new iBST();
         AVL AVLTree = new AVL(); 
-        //rBST BSTRec = new rBST(); 
+        
+        long start = System.nanoTime(); 
         for(int i = 0; i< nums.length; i++){
-            System.out.println("Inserting "+ nums[i]);
-            //BSTRec.insert(nums[i]);
             BSTIter.insert(nums[i]);
-            AVLTree.insert(nums[i]);
         }
-        System.out.println("BST Steps: " + BSTIter.counter);
-        System.out.println("AVL Steps: " + AVLTree.counter);
+       for(int i = 0; i< nums.length; i++){
+            BSTIter.delete(nums[i]);
+        }
+        long end = System.nanoTime(); 
+        System.out.println("Time to insert and delete 10000 ints in a BST "+(end-start)+"ns");
+        
+        
+        start = System.nanoTime(); 
+        for(int i = 0; i< nums.length; i++){
+           AVLTree.insert(nums[i]);
+        }
+        for(int i = 0; i< nums.length; i++){
+            AVLTree.delete(nums[i]);
+        }
+        end = System.nanoTime(); 
+        System.out.println("Time to insert and delete 10000 ints in a AVL "+(end-start)+"ns");
+        
     }
 
 }

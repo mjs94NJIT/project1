@@ -68,6 +68,10 @@ public class iBST{
             current.value = successor.value;
         }
         if(successor.left == null && successor.right == null){ //in the case of no children
+            if(successor.parent == null){ //the tree is now empty
+                successor= null; 
+                return;  
+            }
             if(successor.value == successor.parent.left.value)
                 successor.parent.left = null; 
             else   
@@ -76,12 +80,12 @@ public class iBST{
         }
         if(successor.left != null && successor.right == null){ //in the case of 1 child on the left
             successor.value = successor.left.value; 
-            successor.left= null; 
+            successor.left= successor.left.left; 
             return;
         }
         if(successor.left == null && successor.right != null){ //in the case of 1 child on the right
             successor.value = successor.right.value; 
-            successor.right= null; 
+            successor.right= successor.right.right; 
             return;
         }
     }
