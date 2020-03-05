@@ -23,7 +23,7 @@ public class Main{
     }
 
     public static void main(String args[]){
-        int[] nums = getSortedArray(10);
+        int[] nums = getRandomArray(10000);
         iBST BSTIter = new iBST();
         AVL AVLTree = new AVL(); 
         
@@ -35,17 +35,19 @@ public class Main{
             BSTIter.delete(nums[i]);
         }
         long end = System.nanoTime(); 
+        //System.out.println("BST Steps: " + BSTIter.counter);
         System.out.println("Time to insert and delete 10000 ints in a BST "+(end-start)+"ns");
         
         
         start = System.nanoTime(); 
         for(int i = 0; i< nums.length; i++){
-           AVLTree.insert(nums[i]);
+            AVLTree.insert(nums[i]);
         }
         for(int i = 0; i< nums.length; i++){
             AVLTree.delete(nums[i]);
         }
         end = System.nanoTime(); 
+        //System.out.println("AVL Steps: " + AVLTree.counter);
         System.out.println("Time to insert and delete 10000 ints in a AVL "+(end-start)+"ns");
         
     }
