@@ -1,5 +1,7 @@
 //iterative implementation of AVL tree
 import java.lang.Math; 
+import java.util.LinkedList; 
+import java.util.Queue; 
 public class AVL{
     TreeNode root = null; 
     int counter; 
@@ -159,29 +161,35 @@ public class AVL{
         TreeNode successor = current; //will only be reassigned in the case of 2 children
         if(current.left != null && current.right != null){ //in the case of 2 children 
             successor = findNext(current);
+            if(successor == null)
+                successor = findPrev(current); 
             current.value = successor.value;
         }
         if(successor.left == null && successor.right == null){ //in the case of no children
             if(successor.parent == null){ //the tree is now empty
                 successor= null; 
             }
-            else if(successor.value == successor.parent.left.value)
+            else if(successor.value < successor.parent.value)
                 successor.parent.left = null; 
             else   
                 successor.parent.right = null; 
         }
         else if(successor.left != null && successor.right == null){ //in the case of 1 child on the left
             successor.value = successor.left.value; 
-            successor.left= successor.left.left; 
+            successor.right = successor.left.right;  
+            successor.left = successor.left.left;
         }
         else if(successor.left == null && successor.right != null){ //in the case of 1 child on the right
             successor.value = successor.right.value; 
-            successor.right= successor.right.right; 
+            successor.left = successor.right.left; 
+            successor.right = successor.right.right; 
         }
-        while(successor != null){
-            successor.height = successor.get_height(); 
-            successor.balance(); 
-            successor = successor.parent; 
+        
+        //rebalance
+        while(current != null){
+            current.height = current.get_height(); 
+            current.balance(); 
+            current = current.parent; 
         }
     }
     
@@ -236,4 +244,43 @@ public class AVL{
         }
         return current; 
     }
+
+    // Iterative method to do level order traversal line by line 
+    public void printLevelOrder() 
+    { 
+        // Base Case 
+        TreeNode start = root; 
+          
+        // Create an empty queue for level order tarversal 
+        Queue<TreeNode> q =new LinkedList<TreeNode>(); 
+          
+        // Enqueue Root and initialize height 
+        q.add(start); 
+          
+          
+        while(true) 
+        { 
+              
+            // nodeCount (queue size) indicates number of nodes 
+            // at current level. 
+            int nodeCount = q.size(); 
+            if(nodeCount == 0) 
+                break; 
+              
+            // Dequeue all nodes of current level and Enqueue all 
+            // nodes of next level 
+            while(nodeCount > 0) 
+            { 
+                TreeNode node = q.peek(); 
+                System.out.print(node.value + " "); 
+                q.remove(); 
+                if(node.left != null) 
+                    q.add(node.left); 
+                if(node.right != null) 
+                    q.add(node.right); 
+                nodeCount--; 
+            } 
+            System.out.println(); 
+        } 
+    } 
 }

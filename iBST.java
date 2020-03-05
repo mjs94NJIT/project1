@@ -65,6 +65,8 @@ public class iBST{
         TreeNode successor = current; //will only be reassigned in the case of 2 children
         if(current.left != null && current.right != null){ //in the case of 2 children 
             successor = findNext(current);
+            if(successor == null)
+                successor = findPrev(current); 
             current.value = successor.value;
         }
         if(successor.left == null && successor.right == null){ //in the case of no children
@@ -72,7 +74,7 @@ public class iBST{
                 successor= null; 
                 return;  
             }
-            if(successor.value == successor.parent.left.value)
+            if(successor.value < successor.parent.value)
                 successor.parent.left = null; 
             else   
                 successor.parent.right = null; 
@@ -80,12 +82,14 @@ public class iBST{
         }
         if(successor.left != null && successor.right == null){ //in the case of 1 child on the left
             successor.value = successor.left.value; 
-            successor.left= successor.left.left; 
+            successor.right = successor.left.right;  
+            successor.left = successor.left.left;
             return;
         }
         if(successor.left == null && successor.right != null){ //in the case of 1 child on the right
             successor.value = successor.right.value; 
-            successor.right= successor.right.right; 
+            successor.left = successor.right.left; 
+            successor.right = successor.right.right; 
             return;
         }
     }
@@ -133,6 +137,7 @@ public class iBST{
     //return the node with value v
     private TreeNode find_node(int v){ 
         TreeNode current = root;
+
         while(current.value != v){
             if (v > current.value)
                 current = current.right; 
