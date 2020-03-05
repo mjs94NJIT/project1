@@ -26,10 +26,12 @@ public class Main{
         int[] nums = getRandomArray(10000);
         iBST BSTIter = new iBST();
         AVL AVLTree = new AVL(); 
+        //rBST BSTRec = new rBST();  
         
         long start = System.nanoTime(); 
         for(int i = 0; i< nums.length; i++){
             BSTIter.insert(nums[i]);
+            //BSTRec.insert(nums[i]);
         }
         //System.out.println("BST Steps: " + BSTIter.counter);
        for(int i = 0; i< nums.length; i++){
