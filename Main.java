@@ -31,11 +31,11 @@ public class Main{
         for(int i = 0; i< nums.length; i++){
             BSTIter.insert(nums[i]);
         }
+        //System.out.println("BST Steps: " + BSTIter.counter);
        for(int i = 0; i< nums.length; i++){
             BSTIter.delete(nums[i]);
         }
         long end = System.nanoTime(); 
-        //System.out.println("BST Steps: " + BSTIter.counter);
         System.out.println("Time to insert and delete 10000 ints in a BST "+(end-start)+"ns");
         
         
@@ -43,11 +43,11 @@ public class Main{
         for(int i = 0; i< nums.length; i++){
             AVLTree.insert(nums[i]);
         }
+        //System.out.println("AVL Steps: " + AVLTree.counter);
         for(int i = 0; i< nums.length; i++){
             AVLTree.delete(nums[i]);
         }
         end = System.nanoTime(); 
-        //System.out.println("AVL Steps: " + AVLTree.counter);
         System.out.println("Time to insert and delete 10000 ints in a AVL "+(end-start)+"ns");
         
     }
